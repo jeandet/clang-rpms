@@ -9,14 +9,14 @@ Summary: A C language family front-end for LLVM
 License: NCSA
 Group: Development/Languages
 URL: http://llvm.org
-BuildRequires: git cmake
+BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: clang
-BuildRequires: llvm%{ver_major_minor}-devel llvm%{ver_major_minor}-static 
+BuildRequires: /usr/local/llvm-%{ver_major_minor}/bin/llvm-config
 BuildRequires: glibc-devel     
 BuildRequires: glibc
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel ncurses-devel
 %undefine _disable_source_fetch
 Source0: https://hephaistos.lpp.polytechnique.fr/data/mirrors/clang/%{src_dir}.tar.gz
 %define  SHA256SUM0 0d0a8cd176e2c9d65e237dd66844be31c51433c28e744d27c323fbec9bf2844a
@@ -43,7 +43,7 @@ echo "%SHA256SUM0 %SOURCE0" | sha256sum -c -
 
 %build
 mkdir build && cd build
-CC=clang CXX=clang++ cmake -DLLVM_CONFIG:STRING=/usr/lib64/llvm%{ver_major_minor}/bin/llvm-config -DBUILD_SHARED_LIBS:BOOL=false -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=%{_usr}/local/%{base_name}-%{ver_major_minor} ..
+CC=clang CXX=clang++ cmake -DLLVM_CONFIG:STRING=/usr/local/llvm-%{ver_major_minor}/bin/llvm-config -DBUILD_SHARED_LIBS:BOOL=false -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=%{_usr}/local/%{base_name}-%{ver_major_minor} ..
 
 make %{?_smp_mflags} V=1
 
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot} -C build
 %{_usr}/local/%{base_name}-%{ver_major_minor}/*
 
 %changelog
+
+* Sun Dec 30 2018 Alexis Jeandet <alexis.jeandet@member.fsf.org> - 6.0.0-1
+- Switched to custom llvm
 
 * Fri Dec 28 2018 Alexis Jeandet <alexis.jeandet@member.fsf.org> - 6.0.0-0
 - First setup

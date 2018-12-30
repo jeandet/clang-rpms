@@ -4,19 +4,19 @@
 Name: %{base_name}%{ver_major_minor}
 Version: %{ver_major_minor}.0
 %define src_dir %{base_name}-50
-Release: 0%{?dist}
+Release: 1%{?dist}
 Summary: A C language family front-end for LLVM
 License: NCSA
 Group: Development/Languages
 URL: http://llvm.org
-BuildRequires: git cmake
+BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: clang
 BuildRequires: /usr/local/llvm-%{ver_major_minor}/bin/llvm-config
 BuildRequires: glibc-devel     
 BuildRequires: glibc
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel ncurses-devel
 %undefine _disable_source_fetch
 Source0: https://hephaistos.lpp.polytechnique.fr/data/mirrors/clang/%{src_dir}.tar.gz
 %define  SHA256SUM0 9de7efb7398995f8633fa88b17d087d6b4d28ca42b53c71332d39cebbfacbac4
